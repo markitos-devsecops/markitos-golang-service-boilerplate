@@ -1,0 +1,16 @@
+image: golang:1.23
+
+pipelines:
+  default:
+    - step:
+        name: "Ejecutar Semgrep Scan"
+        script:
+          - apt-get update && apt-get install -y python3-pip
+          - pip3 install semgrep
+          - semgrep --config auto .
+    - step:
+        name: "Ejecutar Gitleaks"
+        script:
+          - apt-get update && apt-get install -y wget
+          - wget -qO- https://github.com/zricethezav/gitleaks/releases/download/v8.2.0/gitleaks_8.2.0_linux_x64.tar.gz | tar xvz -C /usr/local/bin
+          - gitleaks detect --source .
