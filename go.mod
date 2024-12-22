@@ -1,4 +1,4 @@
-module markitos-svc-boilerplate
+module markitos-service-boilerplate
 
 go 1.23.4
 

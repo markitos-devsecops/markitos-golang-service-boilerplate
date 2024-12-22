@@ -1,7 +1,7 @@
 package api
 
 import (
-	"markitos-svc-boilerplate/internal/domain"
+	"markitos-service-boilerplate/internal/domain"
 
 	"github.com/gin-gonic/gin"
 )

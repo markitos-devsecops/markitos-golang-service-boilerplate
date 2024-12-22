@@ -1,8 +1,8 @@
 package services_test
 
 import (
-	"markitos-svc-boilerplate/internal/domain"
-	"markitos-svc-boilerplate/internal/services"
+	"markitos-service-boilerplate/internal/domain"
+	"markitos-service-boilerplate/internal/services"
 	"os"
 	"testing"
 )

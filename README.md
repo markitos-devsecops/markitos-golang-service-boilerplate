@@ -1,8 +1,8 @@
-# Golang Microservice Boilerplate
+# Golang Markitos Service Boilerplate
 
-Este repositorio es una **plantilla para crear microservicios en Golang**, diseñada con **prácticas de DevSecOps** en mente. La plantilla está orientada a la seguridad desde el primer momento del ciclo de vida del desarrollo, lo que incluye análisis estáticos de seguridad (SAST), pruebas automatizadas y un diseño modular que facilita la escalabilidad.
+Este repositorio es una **plantilla para crear servicios en Golang**, diseñada con **prácticas de DevSecOps** en mente. La plantilla está orientada a la seguridad desde el primer momento del ciclo de vida del desarrollo, lo que incluye análisis estáticos de seguridad (SAST), pruebas automatizadas y un diseño modular que facilita la escalabilidad.
 
-Este boilerplate tiene como objetivo ser una solución robusta para comenzar a desarrollar microservicios de manera eficiente, asegurando las mejores prácticas de **seguridad** y **pruebas**. Además, se ha diseñado para ser fácilmente extensible y adaptable.
+Este boilerplate tiene como objetivo ser una solución robusta para comenzar a desarrollar servicios de manera eficiente, asegurando las mejores prácticas de **seguridad** y **pruebas**. Además, se ha diseñado para ser fácilmente extensible y adaptable.
 
 **¡Contribuciones, sugerencias y críticas son bienvenidas!** Si te interesa aprender más sobre **DevSecOps** y seguridad en el ciclo de vida del software, puedes seguir mi canal de YouTube:
 
@@ -24,7 +24,7 @@ Este boilerplate tiene como objetivo ser una solución robusta para comenzar a d
 
 ## Estructura del Proyecto
 
-El proyecto sigue las mejores prácticas de desarrollo modular para microservicios. La estructura de directorios está organizada en capas que separan la lógica de dominio, infraestructura y servicios. Además, incluye un directorio `testsuite` para pruebas.
+El proyecto sigue las mejores prácticas de desarrollo modular para servicios. La estructura de directorios está organizada en capas que separan la lógica de dominio, infraestructura y servicios. Además, incluye un directorio `testsuite` para pruebas.
 
 ```
 golang-microservice-boilerplate/

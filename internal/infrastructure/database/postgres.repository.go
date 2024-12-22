@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"markitos-svc-boilerplate/internal/domain"
+	"markitos-service-boilerplate/internal/domain"
 
 	"gorm.io/gorm"
 )

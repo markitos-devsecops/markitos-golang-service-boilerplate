@@ -2,8 +2,8 @@ package database_test
 
 import (
 	"log"
-	"markitos-svc-boilerplate/internal/domain"
-	"markitos-svc-boilerplate/internal/infrastructure/database"
+	"markitos-service-boilerplate/internal/domain"
+	"markitos-service-boilerplate/internal/infrastructure/database"
 	"testing"
 	"time"
 
@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	APP_BBDD_DSN string = "host=localhost user=admin password=admin dbname=markitos-svc-boilerplate sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable"
+	APP_BBDD_DSN string = "host=localhost user=admin password=admin dbname=markitos-service-boilerplate sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable"
 )
 
 func TestBoilerCreate(t *testing.T) {

@@ -1,7 +1,7 @@
 package services
 
 import (
-	"markitos-svc-boilerplate/internal/domain"
+	"markitos-service-boilerplate/internal/domain"
 	"time"
 )
 

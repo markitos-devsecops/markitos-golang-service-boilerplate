@@ -1,8 +1,8 @@
 package api_test
 
 import (
-	"markitos-svc-boilerplate/internal/domain"
-	"markitos-svc-boilerplate/internal/infrastructure/api"
+	"markitos-service-boilerplate/internal/domain"
+	"markitos-service-boilerplate/internal/infrastructure/api"
 	"os"
 	"testing"
 
