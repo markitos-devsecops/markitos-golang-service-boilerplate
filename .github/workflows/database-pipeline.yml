@@ -21,7 +21,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    steps:    
+    steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
@@ -35,13 +35,16 @@ jobs:
 
     - name: Wait for PostgreSQL to be ready
       run: |
-        until pg_isready -h localhost -p 5432; do
-          sleep 1
+        echo "Esperando a que el contenedor PostgreSQL esté listo..."
+        until docker ps --filter "ancestor=postgres:latest" --format "{{.ID}}" > /dev/null; do
+          echo "Esperando..."; 
+          sleep 1;
         done
-
-    - name: Check if PostgreSQL container is running
-      run: |
-        docker ps -a
+        until docker exec $(docker ps --filter "ancestor=postgres:latest" --format "{{.ID}}") pg_isready -U admin -h localhost -p 5432; do
+          echo "Esperando que PostgreSQL esté listo...";
+          sleep 1;
+        done
+        echo "PostgreSQL está listo."
 
     - name: Drop database if exists
       run: |
