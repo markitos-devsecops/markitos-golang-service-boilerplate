@@ -48,9 +48,8 @@ jobs:
         done
         echo "PostgreSQL está listo."
 
-    - name: Drop database if exists
-      run: |
-        make dropdb || true
+    - name: Check Docker PostgreSQL container
+      run: docker ps --filter "ancestor=postgres:latest"
 
     - name: Create database if not exists
       run: |
