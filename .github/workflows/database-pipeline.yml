@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Database Pipeline
 
 on: [push, pull_request]
 
@@ -40,7 +40,8 @@ jobs:
         done
 
     - name: Create database
-      run: make createdb
+      run: |
+        docker exec -i ${{ job.services.postgres.id }} createdb --username=admin --owner=admin markitos-golang-service-boilerplate
 
     - name: Run tests
       env:
