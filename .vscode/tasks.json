@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Commit and Push",
+            "type": "shell",
+            "command": "${workspaceFolder}/commit.sh",
+            "problemMatcher": []
+        }
+    ]
+}

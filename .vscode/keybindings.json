@@ -1,0 +1,8 @@
+[
+    {
+        "key": "ctrl+k ctrl+x",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Commit and Push",
+        "when": "focusin:filesExplorer"
+    }
+]
