@@ -29,10 +29,10 @@ testcv:
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><database - migrations - sqlc>
 createdb:
-	docker exec -it b2mintory-service-postgres createdb --username=admin --owner=admin markitos-golang-service-boilerplate || true
+	docker exec b2mintory-service-postgres createdb --username=admin --owner=admin markitos-golang-service-boilerplate || true
 dropdb: 
-	docker exec -it b2mintory-service-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-boilerplate' AND pid <> pg_backend_pid();"
-	docker exec -it b2mintory-service-postgres dropdb -U admin markitos-golang-service-boilerplate
+	docker exec b2mintory-service-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-boilerplate' AND pid <> pg_backend_pid();"
+	docker exec b2mintory-service-postgres dropdb -U admin markitos-golang-service-boilerplate
 migrate-init:
 	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
 		-path=/migrations/ \
