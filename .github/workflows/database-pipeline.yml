@@ -41,7 +41,7 @@ jobs:
 
     - name: Create database if not exists
       run: |
-        docker exec -i ${{ job.services.postgres.id }} psql -U admin -tc "SELECT 1 FROM pg_database WHERE datname = 'markitos-golang-service-boilerplate'" | grep -q 1 || docker exec -i ${{ job.services.postgres.id }} createdb --username=admin --owner=admin markitos-golang-service-boilerplate
+        make createdb
 
     - name: Run tests
       env:
