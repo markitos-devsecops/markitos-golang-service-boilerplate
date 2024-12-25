@@ -57,3 +57,6 @@ jobs:
 
     - name: Run tests
       run: make testcv
+
+    - name: Run AppSec tests
+      run: make appsec
