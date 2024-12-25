@@ -52,7 +52,67 @@ func TestSearch(t *testing.T) {
 
 	cleanDB(db)
 }
+func TestBoilerDelete(t *testing.T) {
+	db := setupTestDB()
+	repository := database.NewBoilerPostgresRepository(db)
 
+	boiler, _ := domain.NewBoiler(domain.UUIDv4(), "Hello, World!")
+	db.Create(boiler)
+
+	err := repository.Delete(&boiler.Id)
+	require.NoError(t, err)
+
+	var result domain.Boiler
+	err = db.First(&result, "id = ?", boiler.Id).Error
+	require.Error(t, err)
+	assert.Equal(t, gorm.ErrRecordNotFound, err)
+}
+
+func TestBoilerUpdate(t *testing.T) {
+	db := setupTestDB()
+	repository := database.NewBoilerPostgresRepository(db)
+
+	boiler, _ := domain.NewBoiler(domain.UUIDv4(), "Hello, World!")
+	db.Create(boiler)
+
+	boiler.Message = "Updated Message"
+	err := repository.Update(boiler)
+	require.NoError(t, err)
+
+	var result domain.Boiler
+	err = db.First(&result, "id = ?", boiler.Id).Error
+	require.NoError(t, err)
+	require.Equal(t, "Updated Message", result.Message)
+}
+
+func TestBoilerOne(t *testing.T) {
+	db := setupTestDB()
+	repository := database.NewBoilerPostgresRepository(db)
+
+	boiler, _ := domain.NewBoiler(domain.UUIDv4(), "Hello, World!")
+	db.Create(boiler)
+
+	result, err := repository.One(&boiler.Id)
+	require.NoError(t, err)
+	require.NotNil(t, result)
+	require.Equal(t, boiler.Id, result.Id)
+	require.Equal(t, boiler.Message, result.Message)
+}
+
+func TestBoilerList(t *testing.T) {
+	db := setupTestDB()
+	cleanDB(db)
+	repository := database.NewBoilerPostgresRepository(db)
+
+	for i := 0; i < 5; i++ {
+		boiler := &domain.Boiler{Id: domain.UUIDv4(), Message: domain.RandomString(10)}
+		db.Create(boiler)
+	}
+
+	results, err := repository.List()
+	require.NoError(t, err)
+	require.Len(t, results, 5)
+}
 func TestPagination(t *testing.T) {
 	db := setupTestDB()
 	cleanDB(db)
