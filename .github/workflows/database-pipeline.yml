@@ -1,0 +1,48 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: markitos-golang-service-boilerplate
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Install dependencies
+      run: go mod download
+
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        until pg_isready -h localhost -p 5432; do
+          sleep 1
+        done
+
+    - name: Create database
+      run: make createdb
+
+    - name: Run tests
+      env:
+        APP_BBDD_DSN: "host=localhost user=admin password=admin dbname=markitos-golang-service-boilerplate sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable"
+      run: make test
