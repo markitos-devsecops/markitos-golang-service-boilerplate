@@ -14,10 +14,16 @@ run:
 
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><testing>
+test-cache-clear:
+	go clean -testcache
 test:
 	go test ./...
 testv:
 	go test -v ./...
+testc:
+	go test ./testsuite/... -cover -coverpkg=./internal/...
+testcv:
+	go test -v ./testsuite/... -cover -coverpkg=./internal/...
 #:[.''.]:>-------------------------------------------
 
 #:[.''.]:>-------------------------------------------

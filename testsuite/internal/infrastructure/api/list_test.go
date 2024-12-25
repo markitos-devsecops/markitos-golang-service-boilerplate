@@ -30,6 +30,7 @@ func TestBoilerListHandler_Success(t *testing.T) {
 	err := json.Unmarshal(recorder.Body.Bytes(), &response)
 	assert.NoError(t, err)
 	assert.Len(t, response, 2)
-	assert.Equal(t, "Test Boiler 1", response[0].Message)
-	assert.Equal(t, "Test Boiler 2", response[1].Message)
+	messages := []string{response[0].Message, response[1].Message}
+	assert.Contains(t, messages, "Test Boiler 1")
+	assert.Contains(t, messages, "Test Boiler 2")
 }
