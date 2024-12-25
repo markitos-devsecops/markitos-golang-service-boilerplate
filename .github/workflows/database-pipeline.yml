@@ -21,7 +21,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    steps:
+    steps:    
     - name: Checkout repository
       uses: actions/checkout@v2
 
@@ -38,6 +38,10 @@ jobs:
         until pg_isready -h localhost -p 5432; do
           sleep 1
         done
+
+    - name: Check if PostgreSQL container is running
+      run: |
+        docker ps -a
 
     - name: Drop database if exists
       run: |
