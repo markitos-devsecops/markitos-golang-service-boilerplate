@@ -9,7 +9,6 @@ jobs:
     services:
       b2mintory-service-postgres:
         image: postgres:latest
-        container_name: b2mintory-service-postgres
         ports:
           - 5432:5432
         env:
@@ -50,10 +49,22 @@ jobs:
     - name: Drop database if exists
       run: |
         make dropdb || true
+      env:
+        POSTGRES_HOST: b2mintory-service-postgres
+        POSTGRES_PORT: 5432
+        POSTGRES_DB: markitos-golang-service-boilerplate
 
     - name: Create database if not exists
       run: |
         make createdb
+      env:
+        POSTGRES_HOST: b2mintory-service-postgres
+        POSTGRES_PORT: 5432
+        POSTGRES_DB: markitos-golang-service-boilerplate
 
     - name: Run tests
       run: make testcv
+      env:
+        POSTGRES_HOST: b2mintory-service-postgres
+        POSTGRES_PORT: 5432
+        POSTGRES_DB: markitos-golang-service-boilerplate
