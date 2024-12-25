@@ -9,6 +9,7 @@ jobs:
     services:
       b2mintory-service-postgres:
         image: postgres:latest
+        container_name: b2mintory-service-postgres
         ports:
           - 5432:5432
         env:
