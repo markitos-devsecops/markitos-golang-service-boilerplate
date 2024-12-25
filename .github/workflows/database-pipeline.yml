@@ -20,6 +20,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+          --name b2mintory-service-postgres
+          --hostname b2mintory-service-postgres
 
     steps:
     - name: Checkout repository
@@ -49,22 +51,10 @@ jobs:
     - name: Drop database if exists
       run: |
         make dropdb || true
-      env:
-        POSTGRES_HOST: b2mintory-service-postgres
-        POSTGRES_PORT: 5432
-        POSTGRES_DB: markitos-golang-service-boilerplate
 
     - name: Create database if not exists
       run: |
         make createdb
-      env:
-        POSTGRES_HOST: b2mintory-service-postgres
-        POSTGRES_PORT: 5432
-        POSTGRES_DB: markitos-golang-service-boilerplate
 
     - name: Run tests
       run: make testcv
-      env:
-        POSTGRES_HOST: b2mintory-service-postgres
-        POSTGRES_PORT: 5432
-        POSTGRES_DB: markitos-golang-service-boilerplate
