@@ -1,8 +1,8 @@
 [
     {
-        "key": "ctrl+k ctrl+x",
+        "key": "ctrl+shift+alt+x",
         "command": "workbench.action.tasks.runTask",
-        "args": "Commit and Push",
-        "when": "focusin:filesExplorer"
+        "when": "editorTextFocus",
+        "args": "Commit and Push"
     }
 ]

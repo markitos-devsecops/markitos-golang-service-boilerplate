@@ -4,7 +4,7 @@
         {
             "label": "Commit and Push",
             "type": "shell",
-            "command": "${workspaceFolder}/commit.sh",
+            "command": "./commit.sh",
             "problemMatcher": []
         }
     ]
