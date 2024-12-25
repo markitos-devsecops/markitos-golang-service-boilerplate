@@ -41,7 +41,7 @@ jobs:
 
     - name: Drop database if exists
       run: |
-        docker exec -i ${{ job.services.b2mintory-service-postgres.id }} dropdb --username=admin markitos-golang-service-boilerplate || true
+        make dropdb || true
 
     - name: Create database if not exists
       run: |
