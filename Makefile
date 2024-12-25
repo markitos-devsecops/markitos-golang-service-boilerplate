@@ -28,9 +28,14 @@ testcv:
 
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><database - migrations - sqlc>
-createdb:
+wait-for-db:
+	until docker exec b2mintory-service-postgres pg_isready -U admin -h localhost -p 5432; do \
+		echo "Esperando a que PostgreSQL esté listo..."; \
+		sleep 1; \
+	done
+createdb: wait-for-db
 	docker exec -it b2mintory-service-postgres createdb --username=admin --owner=admin markitos-golang-service-boilerplate || true
-dropdb: 
+dropdb: wait-for-db
 	docker exec -it b2mintory-service-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-boilerplate' AND pid <> pg_backend_pid();"
 	docker exec -it b2mintory-service-postgres dropdb -U admin markitos-golang-service-boilerplate
 migrate-init:
