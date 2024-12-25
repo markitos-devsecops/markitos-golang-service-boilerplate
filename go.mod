@@ -1,4 +1,4 @@
-module markitos-service-boilerplate
+module markitos-golang-service-boilerplate
 
 go 1.23.4
 

@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"markitos-service-boilerplate/internal/domain"
+	"markitos-golang-service-boilerplate/internal/domain"
 
 	"github.com/stretchr/testify/assert"
 )

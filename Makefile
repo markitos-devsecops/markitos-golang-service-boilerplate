@@ -23,27 +23,27 @@ testv:
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><database - migrations - sqlc>
 createdb:
-	docker exec -it markitos-service-postgres createdb --username=admin --owner=admin markitos-service-boilerplate
+	docker exec -it markitos-service-postgres createdb --username=admin --owner=admin markitos-golang-service-boilerplate
 dropdb: 
-	docker exec -it markitos-service-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-service-boilerplate' AND pid <> pg_backend_pid();"
-	docker exec -it markitos-service-postgres dropdb -U admin markitos-service-boilerplate
+	docker exec -it markitos-service-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-boilerplate' AND pid <> pg_backend_pid();"
+	docker exec -it markitos-service-postgres dropdb -U admin markitos-golang-service-boilerplate
 migrate-init:
 	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
 		-path=/migrations/ \
-		-database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-service-boilerplate?sslmode=disable" create \
+		-database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" create \
 		-ext sql -dir internal/infrastructure/database/migrations/ -seq init_schema 
 migrate-up:
 	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
-		-path=/migrations/ -database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-service-boilerplate?sslmode=disable" -verbose up		
+		-path=/migrations/ -database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" -verbose up		
 migrate-down:
 	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
-		-path=/migrations/ -database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-service-boilerplate?sslmode=disable" -verbose down $(or $(VERSION),1)
+		-path=/migrations/ -database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" -verbose down $(or $(VERSION),1)
 migrate-version:
 	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
-		-path=/migrations/ -database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-service-boilerplate?sslmode=disable" version
+		-path=/migrations/ -database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" version
 migrate-goto:
 	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
-		-path=/migrations/ -database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-service-boilerplate?sslmode=disable" goto $(or $(VERSION),1)
+		-path=/migrations/ -database "postgresql://admin:admin@markitos-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" goto $(or $(VERSION),1)
 #:[.''.]:>-------------------------------------------
 
 
@@ -65,16 +65,16 @@ appsec: appsec-sast appsec-sca
 image-push:
 	@echo "" && \
 	echo "" && \
-	echo "Building image markitos-service-boilerplate:$(or $(TAG),1.0.0)" && \
-	docker build -t ghcr.io/markitos-es/markitos-service-boilerplate:$(or $(TAG),1.0.0) . && \
+	echo "Building image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)" && \
+	docker build -t ghcr.io/markitos-es/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) . && \
 	echo "" && \
-	echo "Pushing image markitos-service-boilerplate:$(or $(TAG),1.0.0)" && \
-	docker push ghcr.io/markitos-es/markitos-service-boilerplate:$(or $(TAG),1.0.0) && \
+	echo "Pushing image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)" && \
+	docker push ghcr.io/markitos-es/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) && \
 	echo "" && \
-	echo "Image markitos-service-boilerplate:$(or $(TAG),1.0.0) pushed" && \
-	docker image rm --force ghcr.io/markitos-es/markitos-service-boilerplate:$(or $(TAG),1.0.0)
+	echo "Image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) pushed" && \
+	docker image rm --force ghcr.io/markitos-es/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)
 	echo "" && \
-	echo "Image markitos-service-boilerplate:$(or $(TAG),1.0.0) removed"
+	echo "Image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) removed"
 	echo "" && \
 	echo "Done!"
 #:[.''.]:>-------------------------------------------

@@ -1,8 +1,8 @@
 package services_test
 
 import (
-	"markitos-service-boilerplate/internal/domain"
-	"markitos-service-boilerplate/internal/services"
+	"markitos-golang-service-boilerplate/internal/domain"
+	"markitos-golang-service-boilerplate/internal/services"
 	"os"
 	"testing"
 )

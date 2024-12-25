@@ -2,8 +2,8 @@ package services_test
 
 import (
 	"errors"
-	"markitos-service-boilerplate/internal/domain"
-	"markitos-service-boilerplate/internal/services"
+	"markitos-golang-service-boilerplate/internal/domain"
+	"markitos-golang-service-boilerplate/internal/services"
 	"testing"
 
 	"github.com/stretchr/testify/require"

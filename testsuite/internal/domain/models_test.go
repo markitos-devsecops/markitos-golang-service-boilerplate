@@ -2,7 +2,7 @@ package domain_test
 
 import (
 	"errors"
-	"markitos-service-boilerplate/internal/domain"
+	"markitos-golang-service-boilerplate/internal/domain"
 	"strings"
 	"testing"
 

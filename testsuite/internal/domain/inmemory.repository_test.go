@@ -1,7 +1,7 @@
 package domain_test
 
 import (
-	"markitos-service-boilerplate/internal/domain"
+	"markitos-golang-service-boilerplate/internal/domain"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

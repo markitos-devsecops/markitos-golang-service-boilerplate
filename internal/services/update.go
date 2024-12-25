@@ -1,7 +1,7 @@
 package services
 
 import (
-	"markitos-service-boilerplate/internal/domain"
+	"markitos-golang-service-boilerplate/internal/domain"
 	"time"
 )
 
