@@ -69,7 +69,7 @@ appsec: appsec-sast appsec-sca
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><building>
 docker-login:
-	docker login --username username --password $(PUBLISH_IMAGE_TOKEN) ghcr.io
+	docker login --username username --password-stdin $(PUBLISH_IMAGE_TOKEN) ghcr.io
 image-push: docker-login
 	@echo "" && \
 	echo "" && \
