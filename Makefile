@@ -69,18 +69,18 @@ appsec: appsec-sast appsec-sca
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><building>
 docker-login:
-	docker login ghcr.io -u markitos-es -p $PUBLISH_IMAGE_TOKEN
-image-push:
+	echo $(PUBLISH_IMAGE_TOKEN) | docker login ghcr.io -u markitos-es --password-stdin 
+image-push: docker-login
 	@echo "" && \
 	echo "" && \
 	echo "Building image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)" && \
-	docker build -t ghcr.io/markitos-es/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) . && \
+	docker build -t ghcr.io/markitos-devsecops/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) . && \
 	echo "" && \
 	echo "Pushing image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)" && \
-	docker push ghcr.io/markitos-es/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) && \
+	docker push ghcr.io/markitos-devsecops/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) && \
 	echo "" && \
 	echo "Image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) pushed" && \
-	docker image rm --force ghcr.io/markitos-es/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)
+	docker image rm --force ghcr.io/markitos-devsecops/markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)
 	echo "" && \
 	echo "Image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) removed"
 	echo "" && \
