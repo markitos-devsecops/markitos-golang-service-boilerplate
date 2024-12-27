@@ -63,4 +63,8 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        make docker-login PUBLISH_IMAGE_TOKEN=${{ env.PUBLISH_IMAGE_TOKEN }}
+        echo "Construyendo imagen Docker..."
+        echo "PUBLIC_IMAGE_TOKEN: ${{ secrets.PUBLISH_IMAGE_TOKEN }}"
+        echo "PUBLIC_IMAGE_REGISTRY: ${{ secrets.PUBLISH_IMAGE_REGISTRY }}"
+        echo "PUBLIC_IMAGE_NAME: ${{ secrets.PUBLISH_IMAGE_NAME }}"
+        make docker-login-cicd PUBLISH_IMAGE_TOKEN=${{ env.PUBLISH_IMAGE_TOKEN }}
