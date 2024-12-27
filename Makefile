@@ -68,8 +68,8 @@ appsec: appsec-sast appsec-sca
 
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><building>
-docker-login:
-	echo $(PUBLISH_IMAGE_TOKEN) | docker login ghcr.io -u markitos-es --password-stdin 
+docker-login-cicd:
+	docker login ghcr.io -u markitos-es --password $(PUBLISH_IMAGE_TOKEN)
 image-push: docker-login
 	@echo "" && \
 	echo "" && \
