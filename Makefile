@@ -68,7 +68,9 @@ appsec: appsec-sast appsec-sca
 
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><building>
-image-push:
+docker-login:
+	docker login ghcr.io -u username -p $(PUBLISH_IMAGE_TOKEN)
+image-push: docker-login
 	@echo "" && \
 	echo "" && \
 	echo "Building image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)" && \
