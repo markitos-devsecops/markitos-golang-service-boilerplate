@@ -1,7 +1,5 @@
 FROM golang:1.23 AS build
 
-LABEL org.opencontainers.image.description DESCRIPTION
-
 WORKDIR /app
 COPY . /app
 COPY infrastructure/configuration/sample_app.env /go/bin/app.env
