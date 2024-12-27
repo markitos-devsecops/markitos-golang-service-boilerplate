@@ -51,7 +51,7 @@ jobs:
     - name: Check Docker PostgreSQL container
       run: docker ps --filter "ancestor=postgres:latest"
 
-    - name: Create database if not exists
+    - name: Create database
       run: |
         make createdb
 

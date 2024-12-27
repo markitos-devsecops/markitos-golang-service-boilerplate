@@ -2,8 +2,8 @@ package database_test
 
 import (
 	"log"
+	"markitos-golang-service-boilerplate/infrastructure/database"
 	"markitos-golang-service-boilerplate/internal/domain"
-	"markitos-golang-service-boilerplate/internal/infrastructure/database"
 	"testing"
 	"time"
 

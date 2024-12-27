@@ -1,8 +1,8 @@
 package api_test
 
 import (
+	"markitos-golang-service-boilerplate/infrastructure/api"
 	"markitos-golang-service-boilerplate/internal/domain"
-	"markitos-golang-service-boilerplate/internal/infrastructure/api"
 	"os"
 	"testing"
 
