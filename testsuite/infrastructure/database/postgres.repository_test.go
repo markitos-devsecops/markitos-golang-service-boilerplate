@@ -2,6 +2,7 @@ package database_test
 
 import (
 	"log"
+	"markitos-golang-service-boilerplate/infrastructure/configuration"
 	"markitos-golang-service-boilerplate/infrastructure/database"
 	"markitos-golang-service-boilerplate/internal/domain"
 	"testing"
@@ -11,10 +12,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-)
-
-const (
-	APP_BBDD_DSN string = "host=localhost user=admin password=admin dbname=markitos-golang-service-boilerplate sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable"
 )
 
 func TestBoilerCreate(t *testing.T) {
@@ -149,7 +146,12 @@ func TestSearchAndPagination(t *testing.T) {
 }
 
 func setupTestDB() *gorm.DB {
-	db, err := gorm.Open(postgres.Open(APP_BBDD_DSN), &gorm.Config{})
+	config, err := configuration.LoadConfiguration("../../..")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	db, err := gorm.Open(postgres.Open(config.DsnDatabase), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
