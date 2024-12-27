@@ -1,6 +1,6 @@
 name: Database Pipeline
 
-on: [tag, push]
+on: [push]
 
 jobs:
   test:
