@@ -24,7 +24,6 @@ func NewServer(address string, repository domain.BoilerRepository) *Server {
 	server := &Server{
 		address:    address,
 		repository: repository,
-		router:     nil,
 	}
 	server.router = server.createRouter()
 
