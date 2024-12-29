@@ -1,9 +1,16 @@
 #!/bin/bash
 #:[.''.]:>-------------------------------------------
-#:[.''.]:> Author:
-#:[.''.]:> Marco Antonio Rubio Lopez
-#:[.''.]:> markitos.es.info@gmail.com
-#:[.''.]:> diciembre 2024
+#:[.''.]:> Author...: Marco Antonio Rubio Lopez
+#:[.''.]:> Contact..: markitos.es.info@gmail.com
+#:[.''.]:> createdAt: diciembre 2024
+#:[.''.]:>-------------------------------------------
+
+#:[.''.]:>-------------------------------------------
+#:[.''.]:><docker-compose>
+docker-up:
+	docker compose up -d
+docker-down:
+	docker compose down
 #:[.''.]:>-------------------------------------------
 
 #:[.''.]:>-------------------------------------------
@@ -29,27 +36,27 @@ testcv:
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><database - migrations - sqlc>
 createdb:
-	docker exec b2mintory-service-postgres createdb --username=admin --owner=admin markitos-golang-service-boilerplate || true
+	docker exec markitos-golang-service-postgres createdb --username=admin --owner=admin markitos-golang-service-boilerplate || true
 dropdb: 
-	docker exec b2mintory-service-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-boilerplate' AND pid <> pg_backend_pid();"
-	docker exec b2mintory-service-postgres dropdb -U admin markitos-golang-service-boilerplate
+	docker exec markitos-golang-service-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-boilerplate' AND pid <> pg_backend_pid();"
+	docker exec markitos-golang-service-postgres dropdb -U admin markitos-golang-service-boilerplate
 migrate-init:
-	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
+	docker run --user $(id -u):$(id -g) -v ./infrastructure/database/migrations:/migrations --network host migrate/migrate \
 		-path=/migrations/ \
-		-database "postgresql://admin:admin@b2mintory-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" create \
-		-ext sql -dir internal/infrastructure/database/migrations/ -seq init_schema 
+		-database "postgresql://admin:admin@localhost:5432/markitos-golang-service-boilerplate?sslmode=disable" create \
+		-ext sql -dir infrastructure/database/migrations/ -seq init_schema 
 migrate-up:
-	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
-		-path=/migrations/ -database "postgresql://admin:admin@b2mintory-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" -verbose up		
+	docker run --user $(id -u):$(id -g) -v ./infrastructure/database/migrations:/migrations --network host migrate/migrate \
+		-path=/migrations/ -database "postgresql://admin:admin@localhost:5432/markitos-golang-service-boilerplate?sslmode=disable" -verbose up		
 migrate-down:
-	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
-		-path=/migrations/ -database "postgresql://admin:admin@b2mintory-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" -verbose down $(or $(VERSION),1)
+	docker run --user $(id -u):$(id -g) -v ./infrastructure/database/migrations:/migrations --network host migrate/migrate \
+		-path=/migrations/ -database "postgresql://admin:admin@localhost:5432/markitos-golang-service-boilerplate?sslmode=disable" -verbose down $(or $(VERSION),1)
 migrate-version:
-	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
-		-path=/migrations/ -database "postgresql://admin:admin@b2mintory-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" version
+	docker run --user $(id -u):$(id -g) -v ./infrastructure/database/migrations:/migrations --network host migrate/migrate \
+		-path=/migrations/ -database "postgresql://admin:admin@localhost:5432/markitos-golang-service-boilerplate?sslmode=disable" version
 migrate-goto:
-	docker run --user $(id -u):$(id -g) -v ./internal/infrastructure/database/migrations:/migrations --network host migrate/migrate \
-		-path=/migrations/ -database "postgresql://admin:admin@b2mintory-service-postgres:5432/markitos-golang-service-boilerplate?sslmode=disable" goto $(or $(VERSION),1)
+	docker run --user $(id -u):$(id -g) -v ./infrastructure/database/migrations:/migrations --network host migrate/migrate \
+		-path=/migrations/ -database "postgresql://admin:admin@localhost:5432/markitos-golang-service-boilerplate?sslmode=disable" goto $(or $(VERSION),1)
 #:[.''.]:>-------------------------------------------
 
 
