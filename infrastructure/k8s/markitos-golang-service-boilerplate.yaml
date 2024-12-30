@@ -55,6 +55,7 @@ spec:
           value: host=markitos-golang-service-postgres user=admin password=admin dbname=markitos-golang-service-boilerplate sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable
         - name: APP_ADDRESS
           value: 0.0.0.0:3000
+        imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
