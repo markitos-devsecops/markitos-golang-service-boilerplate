@@ -82,7 +82,7 @@ appsec: appsec-sast appsec-sca
 #:[.''.]:><building>
 docker-login:
 	docker login ghcr.io -u markitos-es --password $(GITHUB_TOKEN)
-image-push: docker-login
+docker-publish-tag: docker-login
 	@echo "" && \
 	echo "" && \
 	echo "Building image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0)" && \
@@ -97,7 +97,7 @@ image-push: docker-login
 	echo "Image markitos-golang-service-boilerplate:$(or $(TAG),1.0.0) removed"
 	echo "" && \
 	echo "Done!"
-image-postgres-push: docker-login
+docker-publish-postgres: docker-login
 	@echo "" && \
 	echo "" && \
 	echo "Building image markitos-golang-service-postgres:$(or $(TAG),1.0.0)" && \
