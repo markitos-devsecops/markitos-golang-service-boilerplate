@@ -36,7 +36,7 @@ metadata:
   labels:
     app: markitos-golang-service-boilerplate
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: markitos-golang-service-boilerplate
