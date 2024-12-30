@@ -34,7 +34,7 @@ testcv:
 #:[.''.]:>-------------------------------------------
 
 #:[.''.]:>-------------------------------------------
-#:[.''.]:><database - migrations - sqlc>
+#:[.''.]:><database - migrations - gorm>
 createdb:
 	docker exec markitos-golang-service-postgres createdb --username=admin --owner=admin markitos-golang-service-boilerplate || true
 	docker exec markitos-golang-service-postgres psql -U admin -d markitos-golang-service-boilerplate -c "CREATE USER \"markitos-golang-service-boilerplate\" WITH PASSWORD 'markitos-golang-service-boilerplate';"
