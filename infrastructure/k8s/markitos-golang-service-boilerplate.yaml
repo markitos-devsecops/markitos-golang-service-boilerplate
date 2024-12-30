@@ -3,6 +3,31 @@ kind: Namespace
 metadata:
   name: markitos
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: markitos
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+  namespace: markitos
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,13 +46,13 @@ spec:
         app: markitos-golang-service-boilerplate
     spec:
       containers:
-      - name: golang-service
+      - name: markitos-golang-service-boilerplate
         image: ghcr.io/markitos-devsecops/markitos-golang-service-boilerplate:1.0.0
         ports:
         - containerPort: 3000
         env:
         - name: APP_BBDD_DSN
-          value: host=markitos-golang-service-postgres user=markitos-golang-service-boilerplate password=markitos-golang-service-boilerplate dbname=markitos-golang-service-boilerplate sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable
+          value: host=markitos-golang-service-postgres user=admin password=admin dbname=markitos-golang-service-boilerplate sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable
         - name: APP_ADDRESS
           value: 0.0.0.0:3000
 ---
@@ -96,29 +121,4 @@ spec:
       port: 5432
       targetPort: 5432
   type: ClusterIP
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-  namespace: markitos
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: postgres-pv
-  namespace: markitos
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /mnt/data
 ---
