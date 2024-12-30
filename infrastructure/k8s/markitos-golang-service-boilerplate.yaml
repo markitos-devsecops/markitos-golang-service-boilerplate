@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: markitos
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: markitos-golang-service-boilerplate
+  namespace: markitos
+  labels:
+    app: markitos-golang-service-boilerplate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: markitos-golang-service-boilerplate
+  template:
+    metadata:
+      labels:
+        app: markitos-golang-service-boilerplate
+    spec:
+      containers:
+      - name: golang-service
+        image: ghcr.io/markitos-devsecops/markitos-golang-service-boilerplate:1.0.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: APP_BBDD_DSN
+          value: host=markitos-golang-service-postgres user=markitos-golang-service-boilerplate password=markitos-golang-service-boilerplate dbname=markitos-golang-service-boilerplate sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable
+        - name: APP_ADDRESS
+          value: 0.0.0.0:3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: markitos-golang-service-boilerplate
+  namespace: markitos
+spec:
+  selector:
+    app: markitos-golang-service-boilerplate
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
+  nodePort: 30080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: markitos-golang-service-postgres
+  namespace: markitos
+  labels:
+    app: markitos-golang-service-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: markitos-golang-service-postgres
+  template:
+    metadata:
+      labels:
+        app: markitos-golang-service-postgres
+    spec:
+      containers:
+      - name: postgres
+        image: ghcr.io/markitos-devsecops/markitos-golang-service-postgres:1.0.0
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: "admin"
+        - name: POSTGRES_PASSWORD
+          value: "admin"
+        - name: POSTGRES_DB
+          value: "markitos-golang-service-boilerplate"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: markitos-golang-service-postgres
+  namespace: markitos
+spec:
+  selector:
+    app: markitos-golang-service-postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: markitos
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
