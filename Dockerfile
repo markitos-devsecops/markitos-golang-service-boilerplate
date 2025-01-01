@@ -13,4 +13,4 @@ COPY --from=build /go/bin/app.env /app.env
 ENV SERVICE_PORT 3000
 EXPOSE ${SERVICE_PORT}
 
-CMD ["/app"]
+ENTRYPOINT [ "/app" ]
