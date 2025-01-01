@@ -13,11 +13,56 @@ import (
 )
 
 func main() {
-
-	//------------------------------------------------TODO: extract-method_LoadConfiguration
 	log.Println("['.']:>")
 	log.Println("['.']:>--------------------------------------------")
 	log.Println("['.']:>--- <starting markitos-golang-service-boilerplate>")
+
+	config := loadConfiguration()
+	repository, err := loadDatabase(config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("['.']:>--- </starting markitos-golang-service-boilerplate>")
+	log.Println("['.']:>--------------------------------------------")
+	log.Println("['.']:>")
+	server := loadServer(config, repository)
+	err = server.Run()
+	if err != nil {
+		log.Fatal("unable to start server: ", err)
+	}
+}
+
+func loadServer(config configuration.MarkitosGolangServiceBoilerplateConfig, repository *database.BoilerPostgresRepository) *api.Server {
+	log.Println("['.']:>----- <server.api>")
+	gin.SetMode(gin.ReleaseMode)
+	server := api.NewServer(config.AppAddress, repository)
+	log.Println("['.']:>------- New server created")
+	log.Println("['.']:>----- </server.api>")
+	return server
+}
+
+func loadDatabase(config configuration.MarkitosGolangServiceBoilerplateConfig) (*database.BoilerPostgresRepository, error) {
+	log.Println("['.']:>")
+	log.Println("['.']:>----- <database>")
+	db, err := gorm.Open(postgres.Open(config.DsnDatabase), &gorm.Config{})
+	if err != nil {
+		log.Fatal("['.']:> error unable to connect to database:", err)
+	}
+	err = db.AutoMigrate(&domain.Boiler{})
+	if err != nil {
+		log.Fatal("['.']:> error unable to migrate database:", err)
+	}
+	repository := database.NewBoilerPostgresRepository(db)
+	log.Println("['.']:>------- Connected to database - migrations")
+	log.Println("['.']:>----- </database>")
+	log.Println("['.']:>")
+
+	return repository, nil
+}
+
+func loadConfiguration() configuration.MarkitosGolangServiceBoilerplateConfig {
+	log.Println("['.']:>")
 	log.Println("['.']:>----- <configuration>")
 	config, err := configuration.LoadConfiguration(".")
 	if err != nil {
@@ -26,40 +71,7 @@ func main() {
 	log.Println("['.']:>------- all values ready to use :)")
 	log.Println("['.']:>------- serverAddress: ", config.AppAddress)
 	log.Println("['.']:>----- </configuration>")
-	//------------------------------------------------
-
-	//------------------------------------------------TODO: extract-method_LoadDatabase
-	log.Println("['.']:>----- <database>")
-	db, err := gorm.Open(postgres.Open(config.DsnDatabase), &gorm.Config{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	//------------------------------------------------
-	// Migrate the schema (migrate)
-	// solo usarlo en caso de no hacer uso de migrate
-	// comentar este bloque si hacemos uso de migrate
-	//------------------------------------------------
-	err = db.AutoMigrate(&domain.Boiler{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	repository := database.NewBoilerPostgresRepository(db)
-	log.Println("['.']:>------- Connected to database - migrations")
-	log.Println("['.']:>----- </database>")
-	//------------------------------------------------
-
-	//------------------------------------------------TODO: extract-method_StartServer
-	log.Println("['.']:>----- <server.api>")
-	gin.SetMode(gin.ReleaseMode)
-	server := api.NewServer(config.AppAddress, repository)
-	log.Println("['.']:>------- New server created")
-	log.Println("['.']:>----- </server.api>")
-	log.Println("['.']:>--- </starting markitos-golang-service-boilerplate>")
-	log.Println("['.']:>--------------------------------------------")
 	log.Println("['.']:>")
-	err = server.Run()
-	if err != nil {
-		log.Fatal("unable to start server: ", err)
-	}
-	//------------------------------------------------
+
+	return config
 }
