@@ -1,15 +1,4 @@
 services:
-  markitos-golang-service-boilerplate:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    container_name: markitos-golang-service-boilerplate
-    networks:
-      markitos-network:
-        ipv4_address: 172.20.0.2
-    depends_on:
-      - markitos-golang-service-postgres
-
   markitos-golang-service-postgres:
     image: postgres:latest
     container_name: markitos-golang-service-postgres
